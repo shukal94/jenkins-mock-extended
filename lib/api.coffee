@@ -1,3 +1,6 @@
+dateFormat = require 'dateformat'
+
+
 APP = 'Jenkins API Mock'
 
 # http://javadoc.jenkins-ci.org/hudson/model/Result.html
@@ -51,10 +54,13 @@ workspace.createJobBuild = (name, {duration, result}) ->
   job = workspace.jobs[name]
   return unless job
   job.building = true
+  number = job.nextBuildNumber++
   build =
-    number: job.nextBuildNumber++
+    number: number
     result: null
     timestamp: new Date().getTime()
+    fullDisplayName: "#{job.name} ##{number}"
+    id: dateFormat new Date(), 'yyyy-mm-dd_HH-MM-ss'
   job.builds.push build
   fn = ->
     build.result = result ? 'SUCCESS'
