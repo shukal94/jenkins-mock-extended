@@ -3,7 +3,7 @@
 This project mocks a jenkins server. The intention of this project was a test driver for https://github.com/knalli/pi-jenkins.
 
 # Usage
-Start the server with `npm start-server`. However, this is only a shortcut which executes `lib/jenkins-api-mock.coffee` using CoffeeScript.
+Start the server with `npm start`. However, this is only a shortcut which executes `lib/jenkins-api-mock.coffee` using CoffeeScript.
 
 The port of the server is `8000`.
 
