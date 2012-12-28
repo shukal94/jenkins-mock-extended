@@ -3,6 +3,14 @@ APP = 'Jenkins API Mock'
 # http://javadoc.jenkins-ci.org/hudson/model/Result.html
 VALID_RESULTS = ['ABORTED', 'FAILURE', 'NOT_BUILT', 'SUCCESS', 'UNSTABLE']
 
+COLORS =
+  RED: 'red'
+  BLUE: 'blue'
+  ABORTED: 'aborted'
+  DISABLED: 'disabled'
+  YELLOW: 'yellow'
+  GREY: 'grey'
+
 workspace = jobs: null
 
 workspace.jobs = {}
@@ -65,18 +73,25 @@ workspace._onUpdateJob = (name) ->
     switch build.result
       when 'ABORTED'
         job.lastBuild = number: build.number
+        job.color = COLORS.ABORTED
       when 'FAILURE'
         job.lastBuild = number: build.number
         job.lastCompletedBuild = number: build.number
         job.lastFailedBuild = number: build.number
+        job.color = COLORS.RED
       when 'SUCCESS'
         job.lastBuild = number: build.number
         job.lastCompletedBuild = number: build.number
         job.lastStableBuild = number: build.number
+        job.color = COLORS.BLUE
       when 'UNSTABLE'
         job.lastBuild = number: build.number
         job.lastCompletedBuild = number: build.number
         job.lastUnstableBuild = number: build.number
+        job.color = COLORS.YELLOW
+      else
+        job.lastBuild = number: build.number
+        job.color = COLORS.GREY
   return
 
 workspace.getJob = (name) -> workspace.jobs[name]
