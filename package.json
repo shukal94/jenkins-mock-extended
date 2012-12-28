@@ -1,0 +1,44 @@
+{
+    "name": "jenkins-api-mock",
+    "description": "The best project ever.",
+    "version": "0.1.0",
+    "homepage": "https://github.com/knalli/jenkins-api-mock",
+    "author": {
+        "name": "knalli",
+        "email": "knallisworld@googlemail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/knalli/jenkins-api-mock.git"
+    },
+    "bugs": {
+        "url": "https://github.com/knalli/jenkins-api-mock/issues"
+    },
+    "licenses": [
+        {
+            "type": "MIT",
+            "url": "https://github.com/knalli/jenkins-api-mock/blob/master/LICENSE-MIT"
+        }
+    ],
+    "main": "lib/jenkins-api-mock",
+    "engines": {
+        "node": ">=0.8.3"
+    },
+    "scripts": {
+        "test": "grunt test",
+        "start": "node_modules/coffee-script/bin/coffee lib/jenkins-api-mock"
+    },
+    "dependencies": {
+        "q": ">=0.8",
+        "eventemitter2": "~0.4.11",
+        "request": "2.12",
+        "express": "3.x"
+    },
+    "devDependencies": {
+        "grunt": "~0.3.17",
+        "coffee-script": "1.3.3",
+        "grunt-coffee": "0.0.6",
+        "grunt-hustler": "~0.7.3"
+    },
+    "keywords": []
+}
