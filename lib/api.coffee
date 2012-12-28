@@ -54,6 +54,7 @@ workspace.createJobBuild = (name, {duration, result}) ->
   build =
     number: job.nextBuildNumber++
     result: null
+    timestamp: new Date().getTime()
   job.builds.push build
   fn = ->
     build.result = result ? 'SUCCESS'
