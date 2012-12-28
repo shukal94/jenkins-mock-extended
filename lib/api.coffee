@@ -22,7 +22,7 @@ workspace.createJob = ({name, displayName}) ->
     description: ''
     displayName: name,
     displayNameOrNull: displayName ? name
-    name: name ? id
+    name: name
     buildable: true
     builds: []
     color: 'blue'
@@ -33,7 +33,7 @@ workspace.createJob = ({name, displayName}) ->
     lastStableBuild: null
     lastUnstableBuild: null
     nextBuildNumber: 1
-  workspace.jobs[id] = job
+  workspace.jobs[name] = job
 
 ###
   Create a new build for the specified job.
@@ -109,7 +109,7 @@ workspace.getJobBuild = (searchJobName, searchBuildQuery) ->
   job = workspace.jobs[searchJobName]
   return unless job
   if parseInt searchBuildQuery isnt NaN
-    (build for build in job.builds when build.id is searchBuildQuery)[0]
+    (build for build in job.builds when build.number is searchBuildQuery)[0]
   else
     workspace._findJobBuildByQuery job.builds, searchBuildQuery
 
