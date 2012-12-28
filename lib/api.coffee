@@ -61,9 +61,11 @@ workspace.createJobBuild = (name, {duration, result}) ->
     timestamp: new Date().getTime()
     fullDisplayName: "#{job.name} ##{number}"
     id: dateFormat new Date(), 'yyyy-mm-dd_HH-MM-ss'
+    building: true
   job.builds.push build
   fn = ->
     build.result = result ? 'SUCCESS'
+    build.building = false
     workspace._onUpdateJob job.name
   setTimeout fn, duration ? 1
   build
