@@ -1,4 +1,4 @@
-# jenkins-api-mock
+# jenkins-api-mock [![Dependency Status](https://gemnasium.com/knalli/jenkins-api-mock.png)](https://gemnasium.com/knalli/jenkins-api-mock)
 
 This project mocks a jenkins server. The intention of this project was a test driver for https://github.com/knalli/pi-jenkins.
 
