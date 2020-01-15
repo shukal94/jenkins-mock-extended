@@ -21,5 +21,11 @@ app.get "#{CONFIG.CONTEXT_PATH}/job/create", api.createJob
 
 app.get "#{CONFIG.CONTEXT_PATH}/job/:job/createBuild", api.createJobBuild
 
+app.post "#{CONFIG.CONTEXT_PATH}/job/:job/buildWithParameters/api/json", api.buildWithParameters
+
+app.post "#{CONFIG.CONTEXT_PATH}/job/:job/:build/stop/api/json", api.abort
+
+app.get "#{CONFIG.CONTEXT_PATH}/job/:job/:build/logText/progressiveHtml/api/json", api.getBuildConsoleOutput
+
 app.listen CONFIG.PORT
 console.log "Server started on port #{CONFIG.PORT}..."

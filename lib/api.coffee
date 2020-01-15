@@ -21,7 +21,7 @@ workspace.jobs = {}
 workspace.createJob = ({name, displayName}) ->
   return unless name
   job =
-    actions: [],
+    actions: ["parameters"],
     description: ''
     displayName: name,
     displayNameOrNull: displayName ? name
@@ -36,6 +36,7 @@ workspace.createJob = ({name, displayName}) ->
     lastStableBuild: null
     lastUnstableBuild: null
     nextBuildNumber: 1
+    url: 'http://127.0.0.1:8000/job/' + name + '/'
   workspace.jobs[name] = job
 
 ###
@@ -58,6 +59,8 @@ workspace.createJobBuild = (name, {duration, result}) ->
   build =
     number: number
     result: null
+    actions: [{"parameters": [{"name": "debug", "value": false}, {"name": "rerun_failures", "value": false}, {"name": "thread_count", "value": 10}]}]
+    url: 'http://localhost:8000/job/' + name + '/lastBuild/'
     timestamp: new Date().getTime()
     fullDisplayName: "#{job.name} ##{number}"
     id: dateFormat new Date(), 'yyyy-mm-dd_HH-MM-ss'
@@ -138,6 +141,28 @@ workspace._findJobBuildByQuery = (builds, query) ->
         result.push build if query in ['lastBuild']
   result[result.length - 1]
 
+workspace.buildWithParameters = (job, query) ->
+  workspace.createJobBuild job, 20000, 'SUCCESS'
+
+workspace.abort = (job, build) ->
+  buildObj = workspace.getJobBuild job, 'lastBuild'
+  buildObj.result = 'ABORTED'
+  buildObj
+
+workspace.getBuildConsoleOutput = (job, build) ->
+  log = "Miusov, as a man man of breeding and deilcacy, " + 
+  "could not but feel some inwrd qualms, when he reached " + 
+  "the Father Superior's with Ivan: he felt ashamed ofhavin" + 
+  "lost his temper. He felt that he ought to have disdaimed that" + 
+  "despicable wretch, Fyodor Pavlovitch, too much to have been upsetby" +
+  "him in Father Zossima's cell, and so to have forgotten himself. Teh monks" + 
+  "were not to blame, in any case, he reflceted, on the steps. And if they're " + 
+  "decent people here (and the Father Superior, I understand, is a nobleman why " + 
+  "not be friendly and courteous withthem? I won't argueIll fall in with everything, " + 
+  "Ill win them by politness, and show them that I've nothing to do with that " + 
+  "Aesop, thta buffoon, that Pierrot, and have merely been takken in over this affair, just as they have."
+  log
+
 exports.createJob = (req, res) ->
   job = workspace.createJob req.query
   if job
@@ -178,3 +203,26 @@ exports.getBuild = (req, res) ->
     res.send build
   else
     res.send 404, "#{APP}: The requested build #{req.params.job}/#{req.params.build} is not available."
+
+exports.buildWithParameters = (req, res) ->
+  build = workspace.buildWithParameters req.params.job, req.query
+  if build
+    res.setHeader('Location', 'srum');
+    res.send build
+  else
+    res.send 404, "#{APP}: not found"
+
+exports.abort = (req, res) ->
+  build = workspace.abort req.params.job, req.params.build
+  if build
+    res.setHeader('Location', 'srum')
+    res.send build
+  else
+    res.send 500, "#{APP}: unable to stop"
+
+exports.getBuildConsoleOutput = (req, res) ->
+  log = workspace.getBuildConsoleOutput req.params.job, req.params.build
+  if log
+    res.send log
+  else
+    res.send 404, "#{APP}: not found"
