@@ -3,6 +3,8 @@ dateFormat = require 'dateformat'
 
 APP = 'Jenkins API Mock'
 
+config = require './config'
+
 # http://javadoc.jenkins-ci.org/hudson/model/Result.html
 VALID_RESULTS = ['ABORTED', 'FAILURE', 'NOT_BUILT', 'SUCCESS', 'UNSTABLE']
 
@@ -36,7 +38,7 @@ workspace.createJob = ({name, displayName}) ->
     lastStableBuild: null
     lastUnstableBuild: null
     nextBuildNumber: 1
-    url: 'http://127.0.0.1:8000/job/' + name + '/'
+    url: '/job/' + name + '/'
   workspace.jobs[name] = job
 
 ###
@@ -60,7 +62,7 @@ workspace.createJobBuild = (name, {duration, result}) ->
     number: number
     result: null
     actions: [{"parameters": [{"name": "debug", "value": false}, {"name": "rerun_failures", "value": false}, {"name": "thread_count", "value": 10}]}]
-    url: 'http://localhost:8000/job/' + name + '/lastBuild/'
+    url: '/job/' + name + '/lastBuild/'
     timestamp: new Date().getTime()
     fullDisplayName: "#{job.name} ##{number}"
     id: dateFormat new Date(), 'yyyy-mm-dd_HH-MM-ss'

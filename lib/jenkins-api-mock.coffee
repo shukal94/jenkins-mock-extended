@@ -2,30 +2,26 @@
 
 express = require 'express'
 api = require "#{__dirname}/api"
-
-
-CONFIG =
-  CONTEXT_PATH: ''
-  PORT: 8000
+config = require './config'
 
 app = express()
 
-app.get "#{CONFIG.CONTEXT_PATH}/api/json", api.getJobs
+app.get config.CONFIG.CONTEXT_PATH + "/api/json", api.getJobs
 
-app.get "#{CONFIG.CONTEXT_PATH}/job/:job/api/json", api.getJob
+app.get config.CONFIG.CONTEXT_PATH + "/job/:job/api/json", api.getJob
 
 # https://ci.jenkins-ci.org/view/Jenkins%20core/job/jenkins_main_trunk/2155/api/json
-app.get "#{CONFIG.CONTEXT_PATH}/job/:job/:build/api/json", api.getBuild
+app.get config.CONFIG.CONTEXT_PATH + "/job/:job/:build/api/json", api.getBuild
 
-app.get "#{CONFIG.CONTEXT_PATH}/job/create", api.createJob
+app.get config.CONFIG.CONTEXT_PATH + "/job/create", api.createJob
 
-app.get "#{CONFIG.CONTEXT_PATH}/job/:job/createBuild", api.createJobBuild
+app.get config.CONFIG.CONTEXT_PATH + "/job/:job/createBuild", api.createJobBuild
 
-app.post "#{CONFIG.CONTEXT_PATH}/job/:job/buildWithParameters/api/json", api.buildWithParameters
+app.post config.CONFIG.CONTEXT_PATH + "/job/:job/buildWithParameters/api/json", api.buildWithParameters
 
-app.post "#{CONFIG.CONTEXT_PATH}/job/:job/:build/stop/api/json", api.abort
+app.post config.CONFIG.CONTEXT_PATH + "/job/:job/:build/stop/api/json", api.abort
 
-app.get "#{CONFIG.CONTEXT_PATH}/job/:job/:build/logText/progressiveHtml/api/json", api.getBuildConsoleOutput
+app.get config.CONFIG.CONTEXT_PATH + "/job/:job/:build/logText/progressiveHtml/api/json", api.getBuildConsoleOutput
 
-app.listen CONFIG.PORT
-console.log "Server started on port #{CONFIG.PORT}..."
+app.listen config.CONFIG.PORT
+console.log "Server started on port " + config.CONFIG.PORT

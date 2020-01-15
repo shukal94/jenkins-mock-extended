@@ -1,0 +1,3 @@
+exports.CONFIG =
+  CONTEXT_PATH: ''
+  PORT: 8000
