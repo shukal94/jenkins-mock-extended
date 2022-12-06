@@ -32,7 +32,7 @@
         "q": ">=0.8",
         "eventemitter2": "~0.4.11",
         "request": "2.12",
-        "express": "3.x",
+        "express": "4.x",
         "dateformat": "1.0.4-1.2.3"
     },
     "devDependencies": {
